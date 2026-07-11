@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://zng8418.github.io/sz-fangyuan/sitemap.xml
