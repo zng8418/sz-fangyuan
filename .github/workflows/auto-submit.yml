@@ -12,11 +12,6 @@ on:
     - cron: '0 14 * * *'
     - cron: '0 20 * * *'
   workflow_dispatch:
-    inputs:
-      force:
-        description: '强制推送所有 URL（忽略 history）'
-        required: false
-        default: 'false'
 
 jobs:
   auto-submit:
@@ -31,9 +26,8 @@ jobs:
       - name: 提取所有 URL (从 sitemap.xml)
         id: urls
         run: |
-          # 从 sitemap 抓 URL
-          python3 -c "
-          import re, urllib.request
+          python3 << 'PYEOF'
+          import re, os
           urls = []
           try:
               with open('sitemap.xml', 'r', encoding='utf-8') as f:
@@ -42,31 +36,28 @@ jobs:
               print(f'从 sitemap.xml 抓到 {len(urls)} 个 URL')
           except Exception as e:
               print(f'! 读 sitemap.xml 失败: {e}')
-          # 默认首页
           if not urls:
               urls = ['https://zng8418.github.io/sz-fangyuan/']
-          # 写到 GITHUB_OUTPUT
           with open(os.environ['GITHUB_OUTPUT'], 'w') as f:
               f.write('urls<<EOF\n' + '\n'.join(urls) + '\nEOF\n')
-          import os
           print('URLs:')
-          for u in urls: print(' -', u)
-          " | tee -a $GITHUB_OUTPUT
+          for u in urls:
+              print(' -', u)
+          PYEOF
 
       - name: 推送到 IndexNow (Bing + Yandex + DuckDuckGo + etc)
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
         run: |
           if [[ -z "$INDEXNOW_KEY" ]]; then
-            echo "::warning::INDEXNOW_KEY secret 未配置，跳过 IndexNow"
+            echo "::warning::INDEXNOW_KEY secret 未配置, 跳过 IndexNow"
             exit 0
           fi
-          # 构造 json payload
-          python3 -c "
+          python3 << 'PYEOF' > /tmp/indexnow.json
           import json, os
           key = os.environ['INDEXNOW_KEY']
-          urls = '''${{ steps.urls.outputs.urls }}'''.strip().split('\n')
-          urls = [u for u in urls if u]
+          with open('/tmp/urls.txt', 'r') as f:
+              urls = [u.strip() for u in f.readlines() if u.strip()]
           payload = {
               'host': 'zng8418.github.io',
               'key': key,
@@ -74,8 +65,21 @@ jobs:
               'urlList': urls
           }
           print(json.dumps(payload, ensure_ascii=False))
-          " > /tmp/indexnow.json
-          
+          PYEOF
+          echo "${{ steps.urls.outputs.urls }}" > /tmp/urls.txt
+          python3 << 'PYEOF' > /tmp/indexnow.json
+          import json, os
+          key = os.environ['INDEXNOW_KEY']
+          with open('/tmp/urls.txt', 'r') as f:
+              urls = [u.strip() for u in f.readlines() if u.strip()]
+          payload = {
+              'host': 'zng8418.github.io',
+              'key': key,
+              'keyLocation': f'https://zng8418.github.io/sz-fangyuan/{key}.txt',
+              'urlList': urls
+          }
+          print(json.dumps(payload, ensure_ascii=False))
+          PYEOF
           cat /tmp/indexnow.json
           echo ""
           echo "--- POST https://api.indexnow.org/indexnow ---"
@@ -102,15 +106,14 @@ jobs:
           BAIDU_SITE: ${{ secrets.BAIDU_SITE }}
         run: |
           if [[ -z "$BAIDU_TOKEN" || -z "$BAIDU_SITE" ]]; then
-            echo "::warning::BAIDU_TOKEN/BAIDU_SITE secret 未配置，跳过百度主动推送"
-            echo "(耿哥登录 https://ziyuan.baidu.com → 链接提交 → 主动推送后告诉我 token，我会配置好)"
+            echo "::warning::BAIDU_TOKEN/BAIDU_SITE 未配置, 跳过百度主动推送"
+            echo "(耿哥登录 https://ziyuan.baidu.com → 链接提交 → 主动推送拿 token, 跑 docs/baidu_token_receiver.sh 一次性配置)"
             exit 0
           fi
           echo "--- POST http://data.zz.baidu.com/urls ---"
-          # 多个 URL 用 \n 分隔
-          URLS=$(echo "${{ steps.urls.outputs.urls }}" | tr '\n' '\n')
+          URLS=$(cat /tmp/urls.txt | tr '\n' '\n')
           http_code=$(curl -sS -o /tmp/baidu_resp.txt -w "%{http_code}" \
-            -X POST "http://data.zz.baidu.com/urls?site=$BAIDU_SITE&token=$BAIDU_TOKEN" \
+            -X POST "http://data.zz.baidu.com/urls?site=$BAIDU_SITE&token=***" \
             --max-time 30 -d "$URLS")
           echo "HTTP $http_code"
           cat /tmp/baidu_resp.txt 2>/dev/null
