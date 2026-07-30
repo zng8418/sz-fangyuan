@@ -7,7 +7,6 @@ on:
       - 'sitemap.xml'
       - '.github/workflows/auto-submit.yml'
   schedule:
-    # 每天 3 次：8/14/20 UTC (北京 16/22/4 点)
     - cron: '0 8 * * *'
     - cron: '0 14 * * *'
     - cron: '0 20 * * *'
@@ -26,7 +25,7 @@ jobs:
       - name: 提取所有 URL (从 sitemap.xml)
         id: urls
         run: |
-          python3 << 'PYEOF'
+          python3 -c "
           import re, os
           urls = []
           try:
@@ -40,10 +39,9 @@ jobs:
               urls = ['https://zng8418.github.io/sz-fangyuan/']
           with open(os.environ['GITHUB_OUTPUT'], 'w') as f:
               f.write('urls<<EOF\n' + '\n'.join(urls) + '\nEOF\n')
-          print('URLs:')
           for u in urls:
               print(' -', u)
-          PYEOF
+          "
 
       - name: 推送到 IndexNow (Bing + Yandex + DuckDuckGo + etc)
         env:
@@ -53,34 +51,27 @@ jobs:
             echo "::warning::INDEXNOW_KEY secret 未配置, 跳过 IndexNow"
             exit 0
           fi
-          python3 << 'PYEOF' > /tmp/indexnow.json
-          import json, os
-          key = os.environ['INDEXNOW_KEY']
-          with open('/tmp/urls.txt', 'r') as f:
-              urls = [u.strip() for u in f.readlines() if u.strip()]
-          payload = {
-              'host': 'zng8418.github.io',
-              'key': key,
-              'keyLocation': f'https://zng8418.github.io/sz-fangyuan/{key}.txt',
-              'urlList': urls
-          }
-          print(json.dumps(payload, ensure_ascii=False))
-          PYEOF
+          # 写 urls.txt
           echo "${{ steps.urls.outputs.urls }}" > /tmp/urls.txt
-          python3 << 'PYEOF' > /tmp/indexnow.json
+          echo "URLs:"
+          cat /tmp/urls.txt
+          echo ""
+          # 用 python 单段构造 payload
+          python3 -c "
           import json, os
           key = os.environ['INDEXNOW_KEY']
-          with open('/tmp/urls.txt', 'r') as f:
-              urls = [u.strip() for u in f.readlines() if u.strip()]
+          with open('/tmp/urls.txt') as f:
+              urls = [u.strip() for u in f if u.strip()]
           payload = {
               'host': 'zng8418.github.io',
               'key': key,
               'keyLocation': f'https://zng8418.github.io/sz-fangyuan/{key}.txt',
               'urlList': urls
           }
-          print(json.dumps(payload, ensure_ascii=False))
-          PYEOF
-          cat /tmp/indexnow.json
+          with open('/tmp/indexnow.json', 'w') as f:
+              json.dump(payload, f, ensure_ascii=False)
+          print(f'Payload 含 {len(urls)} URLs')
+          "
           echo ""
           echo "--- POST https://api.indexnow.org/indexnow ---"
           http_code=$(curl -sS -o /tmp/idx_resp.txt -w "%{http_code}" \
@@ -89,6 +80,7 @@ jobs:
             --max-time 30 -d @/tmp/indexnow.json)
           echo "HTTP $http_code"
           cat /tmp/idx_resp.txt 2>/dev/null
+          echo ""
 
       - name: 推送到 Yandex
         run: |
@@ -111,9 +103,8 @@ jobs:
             exit 0
           fi
           echo "--- POST http://data.zz.baidu.com/urls ---"
-          URLS=$(cat /tmp/urls.txt | tr '\n' '\n')
           http_code=$(curl -sS -o /tmp/baidu_resp.txt -w "%{http_code}" \
             -X POST "http://data.zz.baidu.com/urls?site=$BAIDU_SITE&token=***" \
-            --max-time 30 -d "$URLS")
+            --max-time 30 -d @/tmp/urls.txt)
           echo "HTTP $http_code"
           cat /tmp/baidu_resp.txt 2>/dev/null
