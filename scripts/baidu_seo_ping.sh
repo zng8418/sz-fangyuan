@@ -12,8 +12,8 @@
 
 set -uo pipefail
 
-SITE="https://zng8418.github.io/sz-fangyuan/"
-SITEMAP="https://zng8418.github.io/sz-fangyuan/sitemap.xml"
+SITE="https://bx.szjacky.com/"
+SITEMAP="https://bx.szjacky.com/sitemap.xml"
 INDEXNOW_KEY="4f5a36…8c35"
 LOG_PREFIX="[$(date '+%Y-%m-%d %H:%M:%S')]"
 
@@ -36,9 +36,9 @@ import json
 urls = '''$URLS'''.strip().split('\n')
 urls = [u for u in urls if u]
 print(json.dumps({
-    'host': 'zng8418.github.io',
+    'host': 'bx.szjacky.com',
     'key': '$INDEXNOW_KEY',
-    'keyLocation': f'https://zng8418.github.io/sz-fangyuan/$INDEXNOW_KEY.txt',
+    'keyLocation': f'https://bx.szjacky.com/$INDEXNOW_KEY.txt',
     'urlList': urls
 }, ensure_ascii=False))
 ")
@@ -69,7 +69,7 @@ RESP=$(curl -sS -i -X POST "http://ping.baidu.com/ping/RPC2" \
     -H "Content-Type: text/xml" \
     -H "User-Agent: Mozilla/5.0" \
     --connect-timeout 8 --max-time 12 \
-    -d '<?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>weblogUpdates.ping</methodName><params><param><value>https://zng8418.github.io/sz-fangyuan/</value></param></params></methodCall>' 2>&1 | head -3)
+    -d '<?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>weblogUpdates.ping</methodName><params><param><value>https://bx.szjacky.com/</value></param></params></methodCall>' 2>&1 | head -3)
 echo "$LOG_PREFIX   百度 ping: $(echo "$RESP" | head -1)"
 
 # ---- 4. 百度主动推送 (有 token 才有, 否则跳过) ----

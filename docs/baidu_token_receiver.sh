@@ -7,11 +7,11 @@
 #
 # 用法:
 #   bash docs/baidu_token_receiver.sh <site_url> <token>
-#   例: bash docs/baidu_token_receiver.sh "https://zng8418.github.io/sz-fangyuan/" "abcd1234yourtoken"
+#   例: bash docs/baidu_token_receiver.sh "https://bx.szjacky.com/" "abcd1234yourtoken"
 #
 # 拿 token 的方法:
 #   1. 登录 https://ziyuan.baidu.com
-#   2. 添加站点 zng8418.github.io/sz-fangyuan
+#   2. 添加站点 bx.szjacky.com
 #   3. 验证站点（HTML 标签 / 文件 / DNS 任一）
 #   4. 链接提交 → 主动推送 → 复制 token（"接口调用地址" 里的 token= 后面的字符串）
 
@@ -22,7 +22,7 @@ API_BASE="https://api.github.com"
 
 if [[ $# -lt 2 ]]; then
     echo "用法: bash $0 <site_url> <token>"
-    echo "  例: bash $0 'https://zng8418.github.io/sz-fangyuan/' 'abcd1234xxx'"
+    echo "  例: bash $0 'https://bx.szjacky.com/' 'abcd1234xxx'"
     echo ""
     echo "拿 token 步骤:"
     echo "  1. https://ziyuan.baidu.com → 添加站点 → 验证 (HTML 标签最简单)"
@@ -46,17 +46,17 @@ echo ""
 
 # ---- 2. 立即推送所有 URL ----
 echo "=== 2. 立即推送所有 URL 到百度 ==="
-URLS="https://zng8418.github.io/sz-fangyuan/
-https://zng8418.github.io/sz-fangyuan/宝安石岩元径村统建楼4房120平电梯11楼-2639296461.html
-https://zng8418.github.io/sz-fangyuan/石岩元径村统建楼带大绿本可村委过户-2639303615.html
-https://zng8418.github.io/sz-fangyuan/宝安石岩小产权统建楼4房120平电梯-2639310160.html
-https://zng8418.github.io/sz-fangyuan/宝安石岩小产权统建楼4房120平电梯-2639310187.html
-https://zng8418.github.io/sz-fangyuan/双地铁口石岩统建楼4房120平带电梯-2639313373.html
-https://zng8418.github.io/sz-fangyuan/双地铁石岩统建楼4房120平带大绿本村委过户-2639320397.html
-https://zng8418.github.io/sz-fangyuan/宝安石岩元径村统建楼4房120平电梯11楼-2639321705.html
-https://zng8418.github.io/sz-fangyuan/石岩统建楼4房120平仅128万地铁口-2639327404.html
-https://zng8418.github.io/sz-fangyuan/双地铁口石岩统建楼4房120平带电梯-2639327713.html
-https://zng8418.github.io/sz-fangyuan/双地铁口石岩统建楼4房120平带电梯-2639327717.html"
+URLS="https://bx.szjacky.com/
+https://bx.szjacky.com/宝安石岩元径村统建楼4房120平电梯11楼-2639296461.html
+https://bx.szjacky.com/石岩元径村统建楼带大绿本可村委过户-2639303615.html
+https://bx.szjacky.com/宝安石岩小产权统建楼4房120平电梯-2639310160.html
+https://bx.szjacky.com/宝安石岩小产权统建楼4房120平电梯-2639310187.html
+https://bx.szjacky.com/双地铁口石岩统建楼4房120平带电梯-2639313373.html
+https://bx.szjacky.com/双地铁石岩统建楼4房120平带大绿本村委过户-2639320397.html
+https://bx.szjacky.com/宝安石岩元径村统建楼4房120平电梯11楼-2639321705.html
+https://bx.szjacky.com/石岩统建楼4房120平仅128万地铁口-2639327404.html
+https://bx.szjacky.com/双地铁口石岩统建楼4房120平带电梯-2639327713.html
+https://bx.szjacky.com/双地铁口石岩统建楼4房120平带电梯-2639327717.html"
 
 RESP=$(curl -sS -X POST "http://data.zz.baidu.com/urls?site=$SITE&token=$TOKEN" \
     -H "Content-Type: text/plain" \

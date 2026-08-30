@@ -36,7 +36,7 @@ jobs:
           except Exception as e:
               print(f'! 读 sitemap.xml 失败: {e}')
           if not urls:
-              urls = ['https://zng8418.github.io/sz-fangyuan/']
+              urls = ['https://bx.szjacky.com/']
           with open(os.environ['GITHUB_OUTPUT'], 'w') as f:
               f.write('urls<<EOF\n' + '\n'.join(urls) + '\nEOF\n')
           for u in urls:
@@ -63,9 +63,9 @@ jobs:
           with open('/tmp/urls.txt') as f:
               urls = [u.strip() for u in f if u.strip()]
           payload = {
-              'host': 'zng8418.github.io',
+              'host': 'bx.szjacky.com',
               'key': key,
-              'keyLocation': f'https://zng8418.github.io/sz-fangyuan/{key}.txt',
+              'keyLocation': f'https://bx.szjacky.com/{key}.txt',
               'urlList': urls
           }
           with open('/tmp/indexnow.json', 'w') as f:
@@ -84,7 +84,7 @@ jobs:
 
       - name: 推送到 Yandex
         run: |
-          sitemap_url="https://zng8418.github.io/sz-fangyuan/sitemap.xml"
+          sitemap_url="https://bx.szjacky.com/sitemap.xml"
           echo "--- POST http://webmaster.yandex.com/ping ---"
           http_code=$(curl -sS -o /tmp/yandex_resp.txt -w "%{http_code}" \
             -X POST "http://webmaster.yandex.com/ping" \

@@ -95,13 +95,13 @@ ERROR=$(echo "$RESP" | python3 -c "import json, sys; d=json.load(sys.stdin); pri
 if [[ -n "$COMMIT_URL" ]]; then
     echo "✅ 部署成功!"
     echo "🔗 Commit: $COMMIT_URL"
-    echo "🌐 验证文件 URL: https://zng8418.github.io/sz-fangyuan/$FILENAME"
+    echo "🌐 验证文件 URL: https://bx.szjacky.com/$FILENAME"
     echo ""
     echo "📋 下一步:"
     echo "  1. 等待 1-2 分钟 GitHub Pages 部署"
-    echo "  2. 访问 https://zng8418.github.io/sz-fangyuan/$FILENAME 确认能访问"
+    echo "  2. 访问 https://bx.szjacky.com/$FILENAME 确认能访问"
     echo "  3. 回到百度站长平台点'完成验证'"
-    echo "  4. 验证通过后 → '链接提交' → 'sitemap' → 填 https://zng8418.github.io/sz-fangyuan/sitemap.xml"
+    echo "  4. 验证通过后 → '链接提交' → 'sitemap' → 填 https://bx.szjacky.com/sitemap.xml"
 else
     echo "❌ 失败: $ERROR"
     echo "响应: $RESP"

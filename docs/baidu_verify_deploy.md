@@ -3,7 +3,7 @@
 ## 方式 A: GitHub Action（推荐）
 
 1. **登录百度站长平台** → [ziyuan.baidu.com](https://ziyuan.baidu.com)
-2. **添加站点** → `https://zng8418.github.io/sz-fangyuan/` → 选"文件验证"
+2. **添加站点** → `https://bx.szjacky.com/` → 选"文件验证"
 3. **下载验证 HTML 文件**（如 `baidu_verify_AbCdEf.html`）
 4. **打开文件**，复制**完整内容**（包括 `<html>` 到 `</html>`）
 5. **GitHub Action 触发**：
@@ -11,7 +11,7 @@
    - 填入：filename（验证文件名）+ content（完整 HTML 内容）
    - 点 Run → 1-2 分钟后 GitHub Pages 自动部署
 6. **回到百度站长平台** → 文件可访问 → 点"完成验证"
-7. **提交 sitemap** → 链接提交 → sitemap → `https://zng8418.github.io/sz-fangyuan/sitemap.xml`
+7. **提交 sitemap** → 链接提交 → sitemap → `https://bx.szjacky.com/sitemap.xml`
 
 ## 方式 B: 本地一键脚本（更快）
 
