@@ -1,0 +1,110 @@
+name: 自动推送 sitemap 到 IndexNow / Yandex / Bing
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'sitemap.xml'
+      - '.github/workflows/auto-submit.yml'
+  schedule:
+    - cron: '0 8 * * *'
+    - cron: '0 14 * * *'
+    - cron: '0 20 * * *'
+  workflow_dispatch:
+
+jobs:
+  auto-submit:
+    name: 提交到搜索引擎
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: 提取所有 URL (从 sitemap.xml)
+        id: urls
+        run: |
+          python3 -c "
+          import re, os
+          urls = []
+          try:
+              with open('sitemap.xml', 'r', encoding='utf-8') as f:
+                  content = f.read()
+              urls = re.findall(r'<loc>(.*?)</loc>', content)
+              print(f'从 sitemap.xml 抓到 {len(urls)} 个 URL')
+          except Exception as e:
+              print(f'! 读 sitemap.xml 失败: {e}')
+          if not urls:
+              urls = ['https://bx.szjacky.com/']
+          with open(os.environ['GITHUB_OUTPUT'], 'w') as f:
+              f.write('urls<<EOF\n' + '\n'.join(urls) + '\nEOF\n')
+          for u in urls:
+              print(' -', u)
+          "
+
+      - name: 推送到 IndexNow (Bing + Yandex + DuckDuckGo + etc)
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          if [[ -z "$INDEXNOW_KEY" ]]; then
+            echo "::warning::INDEXNOW_KEY secret 未配置, 跳过 IndexNow"
+            exit 0
+          fi
+          # 写 urls.txt
+          echo "${{ steps.urls.outputs.urls }}" > /tmp/urls.txt
+          echo "URLs:"
+          cat /tmp/urls.txt
+          echo ""
+          # 用 python 单段构造 payload
+          python3 -c "
+          import json, os
+          key = os.environ['INDEXNOW_KEY']
+          with open('/tmp/urls.txt') as f:
+              urls = [u.strip() for u in f if u.strip()]
+          payload = {
+              'host': 'bx.szjacky.com',
+              'key': key,
+              'keyLocation': f'https://bx.szjacky.com/{key}.txt',
+              'urlList': urls
+          }
+          with open('/tmp/indexnow.json', 'w') as f:
+              json.dump(payload, f, ensure_ascii=False)
+          print(f'Payload 含 {len(urls)} URLs')
+          "
+          echo ""
+          echo "--- POST https://api.indexnow.org/indexnow ---"
+          http_code=$(curl -sS -o /tmp/idx_resp.txt -w "%{http_code}" \
+            -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            --max-time 30 -d @/tmp/indexnow.json)
+          echo "HTTP $http_code"
+          cat /tmp/idx_resp.txt 2>/dev/null
+          echo ""
+
+      - name: 推送到 Yandex
+        run: |
+          sitemap_url="https://bx.szjacky.com/sitemap.xml"
+          echo "--- POST http://webmaster.yandex.com/ping ---"
+          http_code=$(curl -sS -o /tmp/yandex_resp.txt -w "%{http_code}" \
+            -X POST "http://webmaster.yandex.com/ping" \
+            --max-time 15 -d "sitemap=$sitemap_url")
+          echo "HTTP $http_code"
+          cat /tmp/yandex_resp.txt 2>/dev/null
+
+      - name: 推送到 百度 (如果配置了 token)
+        env:
+          BAIDU_TOKEN: ${{ secrets.BAIDU_TOKEN }}
+          BAIDU_SITE: ${{ secrets.BAIDU_SITE }}
+        run: |
+          if [[ -z "$BAIDU_TOKEN" || -z "$BAIDU_SITE" ]]; then
+            echo "::warning::BAIDU_TOKEN/BAIDU_SITE 未配置, 跳过百度主动推送"
+            echo "(耿哥登录 https://ziyuan.baidu.com → 链接提交 → 主动推送拿 token, 跑 docs/baidu_token_receiver.sh 一次性配置)"
+            exit 0
+          fi
+          echo "--- POST http://data.zz.baidu.com/urls ---"
+          http_code=$(curl -sS -o /tmp/baidu_resp.txt -w "%{http_code}" \
+            -X POST "http://data.zz.baidu.com/urls?site=$BAIDU_SITE&token=***" \
+            --max-time 30 -d @/tmp/urls.txt)
+          echo "HTTP $http_code"
+          cat /tmp/baidu_resp.txt 2>/dev/null
