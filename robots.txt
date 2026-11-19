@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /search
-
 Sitemap: https://bx.szjacky.com/sitemap.xml
