@@ -93,6 +93,12 @@ a{transition:color .18s var(--ease),background-color .18s var(--ease),border-col
 .item a{color:var(--brand);text-decoration:none;font-weight:600;font-size:15px;line-height:1.55}
 .item a:hover{color:var(--brand-2);text-decoration:underline}
 .item .meta{font-size:13px;color:var(--ink-3);margin-top:6px}
+.item .thumb{display:block;margin:-3px -3px 10px;line-height:0}
+.item .thumb img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--line);border-radius:9px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.gallery figure{margin:0}
+.gallery img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface)}
+.gallery figcaption{font-size:12px;color:var(--ink-3);text-align:center;margin-top:5px}
 .item .tag{display:inline-block;background:var(--brand-soft);color:var(--brand);border-radius:var(--r-pill);padding:1px 9px;font-size:12px;margin-right:6px}
 
 /* ---------- 信息格 ---------- */
