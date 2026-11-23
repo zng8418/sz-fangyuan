@@ -1,5 +1,5 @@
 /* bx.szjacky.com 在线接待挂件
- * 访客 → chat.szjacky.com 桥接服务 → 飞书窗口（庄生 + 小谷）→ 回传访客
+ * 访客 → chat.szjacky.com 桥接服务 → 飞书窗口（庄生 + 小乐）→ 回传访客
  * 纯静态、零依赖、无外部字体/图片，保证 Pages 上秒开且不拖累 SEO 首屏。
  */
 (function () {
@@ -28,7 +28,7 @@
     });
   }
 
-  var box, list, input, sendBtn, badge, es = null, token = null, started = false;
+  var box, list, input, sendBtn, badge, es = null, token = null, started = false, seen = {};
 
   function css() {
     var s = "#bxChatFab{position:fixed;right:16px;bottom:20px;z-index:99990;display:flex;align-items:center;gap:7px;border:0;border-radius:30px;padding:11px 17px;background:#d84315;color:#fff;font-size:15px;font-weight:600;box-shadow:0 6px 20px rgba(216,67,21,.32);cursor:pointer;font-family:inherit}"
@@ -126,7 +126,7 @@
     var d = document.createElement("div");
     d.className = "bxMsg bxTyping";
     d.id = "bxTyping";
-    d.innerHTML = '<div class="bxWho">小谷</div><div class="bxBubble">正在查询…</div>';
+    d.innerHTML = '<div class="bxWho">小乐</div><div class="bxBubble">正在查询…</div>';
     list.appendChild(d);
     list.scrollTop = list.scrollHeight;
   }
@@ -159,17 +159,14 @@
     es.onmessage = function (ev) {
       var d;
       try { d = JSON.parse(ev.data); } catch (e) { return; }
-      if (d.type === "user") {
-        add("bxMe", "我", d.text);
-      } else if (d.type === "reply") {
-        typing(false);
-        add("", "小谷", d.text);
-      } else if (d.type === "staff") {
-        typing(false);
-        add("bxStaff", "庄生", d.text);
-      } else if (d.type === "typing") {
-        typing(true);
-      }
+      if (d.type === "typing") { typing(true); return; }
+      if (d.type !== "user" && d.type !== "reply" && d.type !== "staff") return;
+      if (d.id && seen[d.id]) return;   // 按消息 ID 去重：刷新/重连/回显都不重复画
+      if (d.id) seen[d.id] = 1;
+      typing(false);
+      if (d.type === "user") add("bxMe", "我", d.text);
+      else if (d.type === "reply") add("", "小乐", d.text);
+      else add("bxStaff", "庄生", d.text);
     };
     es.onerror = function () {
       typing(false);
@@ -182,17 +179,24 @@
     };
   }
 
+  function genMid() {
+    return "m" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
   function doSend() {
     var t = input.value.trim();
     if (!t) return;
     input.value = "";
+    var mid = genMid();
+    seen[mid] = 1;              // 自己先画，服务端回显同 ID 时去重
     add("bxMe", "我", t);
-    if (!token) { start(); }
+    // 自己的消息由服务端 SSE 回显（保证只出现一次，且刷新/重连后仍在历史里）
     fetch(API + "/api/chat/send", {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-bx-token": token || "" },
       body: JSON.stringify({
         session: sid(),
+        mid: mid,
         text: t,
         page: location.pathname + location.search
       })
@@ -203,7 +207,6 @@
       fail("网络异常，请稍后重试或拨打 13923838418。");
     });
   }
-
   function boot() {
     ui();
     try {
