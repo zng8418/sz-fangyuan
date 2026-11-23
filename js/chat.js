@@ -139,18 +139,38 @@
     list.scrollTop = list.scrollHeight;
   }
 
+  function fetchRetry(url, opts, tries) {
+    opts = opts || {};
+    opts.credentials = "omit";
+    return new Promise(function (resolve, reject) {
+      var n = 0;
+      (function go() {
+        n += 1;
+        fetch(url, opts).then(resolve, function () {
+          if (n >= tries) { reject(new Error("network")); return; }
+          setTimeout(go, 1200 * n);
+        });
+      })();
+    });
+  }
+
+  var cfgReady = null;
+
   function start() {
-    if (started) return;
-    started = true;
-    fetch(API + "/api/chat/config", { credentials: "omit" })
+    if (cfgReady) return cfgReady;
+    cfgReady = fetchRetry(API + "/api/chat/config", null, 4)
       .then(function (r) { return r.ok ? r.json() : Promise.reject(0); })
       .then(function (c) {
         token = c.token;
         connect();
+        return token;
       })
       .catch(function () {
-        fail("在线接待暂时不可用，请直接拨打庄生电话 13923838418。");
+        cfgReady = null;          // 允许下次重试
+        fail("在线接待暂时连接不上，请稍后再试或直接拨打庄生电话 13923838418。");
+        throw 0;
       });
+    return cfgReady;
   }
 
   function connect() {
@@ -190,16 +210,18 @@
     var mid = genMid();
     seen[mid] = 1;              // 自己先画，服务端回显同 ID 时去重
     add("bxMe", "我", t);
-    // 自己的消息由服务端 SSE 回显（保证只出现一次，且刷新/重连后仍在历史里）
-    fetch(API + "/api/chat/send", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "x-bx-token": token || "" },
-      body: JSON.stringify({
-        session: sid(),
-        mid: mid,
-        text: t,
-        page: location.pathname + location.search
-      })
+    start().then(function () {
+      // 自己的消息由服务端 SSE 回显（保证只出现一次，且刷新/重连后仍在历史里）
+      return fetchRetry(API + "/api/chat/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-bx-token": token || "" },
+        body: JSON.stringify({
+          session: sid(),
+          mid: mid,
+          text: t,
+          page: location.pathname + location.search
+        })
+      }, 2);
     }).then(function (r) {
       if (r.status === 429) { fail("发送太频繁啦，稍等一下再发。"); }
       else if (!r.ok) { fail("发送失败，请稍后重试或拨打 13923838418。"); }
