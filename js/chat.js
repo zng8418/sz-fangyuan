@@ -36,11 +36,11 @@
 
   /* ---------------- 样式 ---------------- */
   function css() {
-    var s = "#bxChatFab{position:fixed;right:16px;bottom:20px;z-index:99990;display:flex;align-items:center;gap:7px;border:0;border-radius:30px;padding:11px 17px;background:#d84315;color:#fff;font-size:15px;font-weight:600;box-shadow:0 6px 20px rgba(216,67,21,.32);cursor:pointer;font-family:inherit}"
+    var s = "#bxChatFab{position:fixed;right:16px;bottom:20px;z-index:99990;display:flex;align-items:center;gap:7px;border:0;border-radius:30px;padding:11px 17px;background:#d84315;color:#fff;font-size:15px;font-weight:600;box-shadow:0 2px 4px rgba(26,35,126,.08),0 12px 28px rgba(26,35,126,.18);cursor:pointer;font-family:inherit;transition:transform .18s cubic-bezier(.2,.6,.25,1),box-shadow .18s cubic-bezier(.2,.6,.25,1)}" + "#bxChatFab:hover{box-shadow:0 2px 4px rgba(26,35,126,.1),0 16px 34px rgba(26,35,126,.24)}" + "#bxChatFab:active{transform:translateY(1px)}"
       + "#bxChatFab .bxIco{font-size:19px;line-height:1}"
       + "#bxChatBadge{display:none;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#fff;color:#d84315;font-size:12px;font-weight:700;line-height:18px;text-align:center}"
       + "#bxChatFab.bxHas #bxChatBadge{display:block}"
-      + "#bxChatPanel{position:fixed;right:16px;bottom:88px;z-index:99991;width:352px;max-width:calc(100vw - 32px);height:474px;max-height:calc(100vh - 120px);background:#fff;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.22);display:none;flex-direction:column;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif}"
+      + "#bxChatPanel{position:fixed;right:16px;bottom:88px;z-index:99991;width:352px;max-width:calc(100vw - 32px);height:474px;max-height:calc(100vh - 120px);background:#fff;border-radius:14px;box-shadow:0 2px 4px rgba(26,35,126,.09),0 16px 40px rgba(26,35,126,.2);display:none;flex-direction:column;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif}"
       + "#bxChatPanel.bxOpen{display:flex}"
       + "#bxChatHead{background:linear-gradient(135deg,#1a237e,#283593);color:#fff;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;flex:0 0 auto}"
       + "#bxChatHead b{font-size:15px;font-weight:600}"
@@ -60,7 +60,9 @@
       + ".bxChip:active{background:#e8eaf6}"
       + "#bxChatFoot{flex:0 0 auto;border-top:1px solid #e3e5e8;padding:9px;display:flex;gap:8px;background:#fff;margin-top:8px}"
       + "#bxChatInput{flex:1 1 auto;border:1px solid #e3e5e8;border-radius:9px;padding:9px 11px;font-size:15px;font-family:inherit;outline:none;min-width:0}"
-      + "#bxChatInput:focus{border-color:#1a237e}"
+      + "#bxChatInput:focus{border-color:#1a237e;outline:2px solid rgba(26,35,126,.32);outline-offset:1px}"
+      + "#bxChatSend:active{transform:translateY(1px)}"
+      + "#bxChatFab:focus-visible,#bxChatSend:focus-visible,#bxChatInput:focus-visible,.bxChip:focus-visible{outline:2px solid #1a237e;outline-offset:2px}"
       + "#bxChatSend{flex:0 0 auto;border:0;border-radius:9px;background:#1a237e;color:#fff;padding:0 15px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}"
       + "#bxChatTip{flex:0 0 auto;padding:0 9px 9px;font-size:11px;color:#999;text-align:center;background:#fff}"
       + "@media(max-width:520px){#bxChatPanel{right:0;bottom:0;width:100vw;max-width:100vw;height:78vh;border-radius:14px 14px 0 0}#bxChatFab{right:12px;bottom:14px}}";
@@ -292,9 +294,23 @@
     });
   }
 
+  /* ---------------- 对外接口：页面里的「在线咨询」按钮 ---------------- */
+  function openChat() {
+    ui();
+    if (!panel.classList.contains("bxOpen")) fab.click();
+    setTimeout(function () { input.focus(); }, 60);
+  }
+  window.bxChatOpen = openChat;
+
   /* ---------------- 启动 ---------------- */
   function boot() {
     ui();
+    document.addEventListener("click", function (e) {
+      var t = e.target && e.target.closest ? e.target.closest("[data-bx-chat]") : null;
+      if (!t) return;
+      e.preventDefault();
+      openChat();
+    });
   }
 
   if (document.readyState === "loading") {

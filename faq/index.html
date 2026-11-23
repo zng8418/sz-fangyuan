@@ -20,89 +20,202 @@
 
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首页", "item": "https://bx.szjacky.com/"}, {"@type": "ListItem", "position": 2, "name": "常见问题", "item": "https://bx.szjacky.com/faq/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "石岩小产权房能过户吗", "acceptedAnswer": {"@type": "Answer", "text": "费用由村集体当期政策决定，通常包含工本或服务费，金额不算高但口径会调整。看房阶段直接到村委问当期收费标准最准。"}}, {"@type": "Question", "name": "石岩统建楼大绿本是什么", "acceptedAnswer": {"@type": "Answer", "text": "不是。它是村集体出具的房屋所有权证明，不能代替国土部门的不动产权登记。"}}, {"@type": "Question", "name": "石岩农民房和统建楼有什么区别", "acceptedAnswer": {"@type": "Answer", "text": "纯自建房通常不能，只能做协议转让加村委见证；村委统一登记并出具大绿本的统建楼可以，具体以村集体当期口径为准。"}}, {"@type": "Question", "name": "石岩统建楼拆迁补偿怎么算", "acceptedAnswer": {"@type": "Answer", "text": "有，按所在村当期补偿方案执行。金额取决于房屋登记与认定情况、以及方案本身，与商品房标准不同。"}}, {"@type": "Question", "name": "元径村统建楼多少钱一平", "acceptedAnswer": {"@type": "Answer", "text": "站内可核对的样本是 120㎡ 4房、电梯 11 层、毛坯、带大绿本可村委过户，单价约 1.07 万元/㎡。同一村不同楼栋不同楼层会明显不同，以具体房源页标注为准。"}}, {"@type": "Question", "name": "石岩小产权房能落户吗", "acceptedAnswer": {"@type": "Answer", "text": "通常不具备商品房同等落户条件，但政策口径会调整，需要向公安机关与村集体确认当期具体规定。"}}, {"@type": "Question", "name": "买石岩农民房要看什么证", "acceptedAnswer": {"@type": "Answer", "text": "必须。复印件和翻拍件无法核验真伪与当前登记状态，而且无法确认是否已被抵押查封。"}}, {"@type": "Question", "name": "石岩统建楼怎么挑楼层", "acceptedAnswer": {"@type": "Answer", "text": "带电梯住宅通常 8-14 层综合最优，但要结合楼栋位置、朝向与噪音源一起看，没有通用答案。"}}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "RealEstateAgent", "name": "庄生 - 深圳石岩元径村统建楼", "telephone": "13923838418", "url": "https://bx.szjacky.com/contact.html", "areaServed": "深圳市宝安区石岩街道", "address": {"@type": "PostalAddress", "streetAddress": "深圳市宝安区石岩街道元径村统建楼B栋", "addressLocality": "深圳市", "addressRegion": "广东省", "addressCountry": "CN"}}</script>
 <style>
+/* ============================================================
+   设计令牌（单一来源：形状/颜色/阴影/间距只在这里定义）
+   形状阶梯：控件 10px · 小格 8px · 卡片 14px · 药丸 999px
+   颜色：靛蓝=品牌 · 橙红=唯一行动色 · 琥珀已降级移除
+   ============================================================ */
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--p:#1a237e;--pl:#283593;--a:#ffc107;--bg:#f4f5f7;--card:#fff;--t:#333;--tl:#666;--bd:#e3e5e8}
-body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--t);line-height:1.85;background:var(--bg)}
-.wrap{max-width:960px;margin:0 auto;padding:0 16px 40px}
-.topnav{background:var(--p);color:#fff;padding:10px 0}
-.topnav .inner{max-width:960px;margin:0 auto;padding:0 16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.topnav a{color:#e8eaf6;text-decoration:none;font-size:14px;padding:4px 8px;border-radius:4px}
-.topnav a:hover{background:rgba(255,255,255,.14);color:#fff}
-.hero{background:linear-gradient(135deg,var(--p),var(--pl));color:#fff;padding:30px 20px;border-radius:14px;margin:18px 0}
-.hero h1{font-size:24px;margin-bottom:6px}
-.hero p{font-size:14px;opacity:.92}
-.crumb{font-size:13px;color:var(--tl);padding:12px 0}
-.crumb a{color:var(--pl);text-decoration:none}
-.card{background:var(--card);border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.card h2{color:var(--p);font-size:18px;margin-bottom:12px;border-left:4px solid var(--a);padding-left:9px}
-.card h3{color:var(--pl);font-size:16px;margin:16px 0 8px}
-.card p{margin-bottom:10px;overflow-wrap:anywhere}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
-.item{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px}
-.item a{color:var(--p);text-decoration:none;font-weight:600;font-size:15px}
-.item .meta{font-size:13px;color:var(--tl);margin-top:6px}
-.item .tag{display:inline-block;background:#e8eaf6;color:var(--p);border-radius:4px;padding:1px 7px;font-size:12px;margin-right:6px}
+:root{
+  --brand:#1a237e;--brand-2:#283593;--brand-soft:#eef0fb;
+  --ink:#1f2330;--ink-2:#454b5a;--ink-3:#6b7280;
+  --line:#e4e7ec;--line-2:#eef0f3;
+  --bg:#f5f6f8;--surface:#ffffff;--surface-2:#fafbfc;
+  --cta:#d84315;--cta-2:#c23b12;
+  --r-ctl:10px;--r-sm:8px;--r-card:14px;--r-pill:999px;
+  --sh-1:0 1px 2px rgba(26,35,126,.05),0 6px 18px rgba(26,35,126,.055);
+  --sh-2:0 2px 4px rgba(26,35,126,.07),0 12px 28px rgba(26,35,126,.08);
+  --ease:cubic-bezier(.2,.6,.25,1);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+  color:var(--ink);line-height:1.75;background:var(--bg);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{max-width:100%}
+a{transition:color .18s var(--ease),background-color .18s var(--ease),border-color .18s var(--ease)}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px 56px}
+
+/* ---------- 顶部导航：单行横向滚动，关键词链接不再堆成墙 ---------- */
+.topnav{position:sticky;top:0;z-index:60;background:var(--brand);box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.topnav .inner{max-width:1080px;margin:0 auto;padding:0 16px;display:flex;flex-wrap:nowrap;align-items:center;
+  gap:2px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.topnav .inner::-webkit-scrollbar{display:none}
+.topnav a{color:rgba(255,255,255,.82);text-decoration:none;font-size:14px;padding:13px 10px;white-space:nowrap;
+  border-bottom:2px solid transparent}
+.topnav a:hover{color:#fff;background:rgba(255,255,255,.09);border-bottom-color:rgba(255,255,255,.35)}
+.topnav a.on{color:#fff;background:rgba(255,255,255,.16);border-bottom-color:#fff}
+.topnav .brand{display:flex;align-items:center;gap:8px;font-weight:700;color:#fff;font-size:15px;padding-left:0}
+.topnav .brand::before{content:"";width:18px;height:18px;border-radius:5px;background:#fff;box-shadow:inset 0 0 0 4px var(--brand-2)}
+
+/* ---------- Hero：眉标 + 标题 + 副文案 + 行动区 ---------- */
+.hero{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 62%,#3949ab 100%);color:#fff;
+  padding:30px 22px 28px;border-radius:var(--r-card);margin:18px 0;box-shadow:var(--sh-1)}
+.hero .eyebrow{font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.72);margin-bottom:8px}
+.hero h1{font-size:26px;line-height:1.3;font-weight:700;letter-spacing:.01em;text-wrap:balance;margin-bottom:8px}
+.hero p{font-size:14.5px;color:rgba(255,255,255,.9);margin-bottom:0}
+.hero p+p{margin-top:6px;font-size:13px;color:rgba(255,255,255,.72)}
+.hero .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.hero .acts a,.hero .acts button{display:inline-block;padding:10px 20px;border-radius:var(--r-ctl);font-size:15px;font-weight:600;
+  text-decoration:none;white-space:nowrap;transition:transform .18s var(--ease),background-color .18s var(--ease)}
+.hero .acts a:active{transform:translateY(1px)}
+.hero .acts .primary{background:var(--cta);color:#fff;border:1px solid var(--cta);font-family:inherit;cursor:pointer}
+.hero .acts .primary:hover{background:var(--cta-2)}
+.hero .acts .ghost{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.42)}
+.hero .acts .primary:hover{background:var(--cta-2);border-color:var(--cta-2)}
+.hero .acts .ghost:hover{background:rgba(255,255,255,.22)}
+
+.crumb{font-size:13px;color:var(--ink-3);padding:12px 0}
+.crumb a{color:var(--brand);text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+
+/* ---------- 卡片与栅格 ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:22px;margin-bottom:18px;box-shadow:var(--sh-1)}
+.card h2{color:var(--brand);font-size:19px;line-height:1.45;font-weight:700;letter-spacing:.01em;
+  margin-bottom:14px;padding-left:14px;position:relative}
+.card h2::before{content:"";position:absolute;left:0;top:.42em;width:4px;height:1.05em;border-radius:2px;background:var(--brand)}
+.card h3{color:var(--brand-2);font-size:16.5px;font-weight:700;margin:18px 0 8px;letter-spacing:.01em}
+.card p{margin-bottom:10px;color:var(--ink-2);overflow-wrap:anywhere}
+.card p:last-child{margin-bottom:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-ctl);padding:14px 15px;
+  transition:border-color .18s var(--ease),box-shadow .18s var(--ease),transform .18s var(--ease)}
+.item:hover{border-color:#c9cef0;box-shadow:var(--sh-1);transform:translateY(-1px)}
+.item a{color:var(--brand);text-decoration:none;font-weight:600;font-size:15px;line-height:1.55}
+.item a:hover{color:var(--brand-2);text-decoration:underline}
+.item .meta{font-size:13px;color:var(--ink-3);margin-top:6px}
+.item .tag{display:inline-block;background:var(--brand-soft);color:var(--brand);border-radius:var(--r-pill);padding:1px 9px;font-size:12px;margin-right:6px}
+
+/* ---------- 信息格 ---------- */
 .kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-.kv div{background:#fafbfc;border:1px solid var(--bd);border-radius:8px;padding:10px}
-.kv .k{font-size:12px;color:var(--tl)}
-.kv .v{font-weight:600;color:var(--p)}
-.faq{border:1px solid var(--bd);border-radius:8px;margin-bottom:8px;overflow:hidden}
-.faq .q{background:#f7f8fa;padding:10px 12px;font-weight:600;color:var(--p);cursor:pointer}
-.faq .a{padding:10px 12px;font-size:14px}
+.kv div{background:var(--surface-2);border:1px solid var(--line-2);border-radius:var(--r-sm);padding:10px 12px}
+.kv .k{font-size:12px;color:var(--ink-3)}
+.kv .v{font-weight:600;color:var(--brand)}
+
+/* ---------- FAQ：真交互（details/summary），不是假光标 ---------- */
+.faq{border:1px solid var(--line);border-radius:var(--r-sm);margin-bottom:8px;overflow:hidden;background:var(--surface)}
+.faq .q{background:var(--surface-2);padding:11px 13px;font-weight:600;color:var(--brand);cursor:pointer;
+  list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
+  transition:background-color .18s var(--ease)}
+.faq .q::-webkit-details-marker{display:none}
+.faq .q::after{content:"＋";color:var(--ink-3);font-weight:400;flex:0 0 auto}
+.faq[open] .q{background:var(--brand-soft)}
+.faq[open] .q::after{content:"－"}
+.faq .a{padding:11px 13px;font-size:14px;color:var(--ink-2);border-top:1px solid var(--line-2)}
+
+/* ---------- 链接列表 ---------- */
 .links{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
-.links a{color:var(--pl);text-decoration:none;font-size:14px}
-.links a:hover{text-decoration:underline}
+.links a{color:var(--brand-2);text-decoration:none;font-size:14px;display:block;padding:7px 10px;border-radius:var(--r-sm);
+  border:1px solid transparent;transition:background-color .18s var(--ease),color .18s var(--ease)}
+.links a:hover{background:var(--brand-soft);color:var(--brand);text-decoration:none}
+
+/* ---------- 分页 ---------- */
 .pager{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
-.pager a,.pager span{padding:7px 13px;border:1px solid var(--bd);border-radius:7px;background:#fff;color:var(--p);text-decoration:none;font-size:14px}
-.pager .cur{background:var(--p);color:#fff}
-.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.pager a,.pager span{padding:7px 13px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);
+  color:var(--brand);text-decoration:none;font-size:14px;transition:border-color .18s var(--ease),background-color .18s var(--ease)}
+.pager a:hover{border-color:var(--brand);background:var(--brand-soft)}
+.pager .cur{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* ---------- 示意图 ---------- */
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 .shots figure{margin:0}
-.shots img{width:100%;border-radius:10px;border:1px solid var(--bd);background:#fff}
-.shots figcaption{font-size:12px;color:var(--tl);text-align:center;margin-top:4px}
-.foot{text-align:center;color:#999;font-size:12px;padding:26px 0 10px;border-top:1px solid var(--bd);margin-top:26px}
-.contact .ct{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
-.contact .ct-name{font-size:18px;font-weight:700;color:var(--p)}
-.contact .ct-role{font-size:12px;font-weight:400;color:var(--tl);margin-left:10px}
-.contact .ct-phone{display:inline-block;font-size:26px;font-weight:800;color:#d84315;letter-spacing:1px;text-decoration:none;margin:6px 0}
-.contact .ct-addr{font-size:13px;color:var(--tl)}
-.contact .ct-note{font-size:13px;color:var(--tl);margin-top:6px}
-.contact .ct-side{display:flex;flex-direction:column;gap:8px;min-width:150px}
-.ct-btn{display:block;text-align:center;background:#d84315;color:#fff;text-decoration:none;padding:11px 18px;border-radius:8px;font-weight:600;font-size:15px}
-.ct-btn.ghost{background:#fff;color:var(--p);border:1px solid var(--p)}
-.foot .ct-line{color:#666;margin-bottom:4px}
-.foot .ct-line a{color:var(--p);font-weight:600}
-.foot a{color:var(--pl)}
-@media(max-width:640px){.hero h1{font-size:19px}.card{padding:15px}}
+.shots img{width:100%;border-radius:var(--r-sm);border:1px solid var(--line);background:var(--surface)}
+.shots figcaption{font-size:12px;color:var(--ink-3);text-align:center;margin-top:5px}
+
+/* ---------- 联系卡 ---------- */
+.contact .ct{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+.contact .ct-main{flex:1 1 260px}
+.contact .ct-name{font-size:18px;font-weight:700;color:var(--brand)}
+.contact .ct-role{font-size:12px;font-weight:400;color:var(--ink-3);margin-left:10px}
+.contact .ct-phone{display:inline-block;font-size:26px;font-weight:800;color:var(--cta);letter-spacing:.5px;text-decoration:none;margin:6px 0}
+.contact .ct-phone:hover{color:var(--cta-2);text-decoration:underline}
+.contact .ct-addr{font-size:13px;color:var(--ink-2)}
+.contact .ct-note{font-size:13px;color:var(--ink-3);margin-top:6px}
+.contact .ct-side{display:flex;flex-direction:column;gap:8px;min-width:168px}
+.ct-btn{display:block;text-align:center;background:var(--cta);color:#fff;text-decoration:none;padding:11px 18px;
+  border-radius:var(--r-ctl);font-weight:600;font-size:15px;border:1px solid var(--cta);
+  transition:background-color .18s var(--ease),transform .18s var(--ease)}
+.ct-btn:hover{background:var(--cta-2);border-color:var(--cta-2)}
+.ct-btn:active{transform:translateY(1px)}
+.ct-btn.ghost{background:var(--surface);color:var(--brand);border-color:var(--brand)}
+.ct-btn.ghost:hover{background:var(--brand-soft)}
+
+/* ---------- 页脚 ---------- */
+.foot{text-align:center;color:var(--ink-2);font-size:12.5px;padding:26px 0 12px;border-top:1px solid var(--line);margin-top:26px}
+.foot .ct-line{color:var(--ink-2);margin-bottom:4px}
+.foot .ct-line a{color:var(--brand);font-weight:600}
+.foot a{color:var(--brand-2)}
+.foot a:hover{color:var(--brand);text-decoration:underline}
+
+@media(max-width:640px){
+  .hero{padding:22px 16px 20px;margin:14px 0}
+  .hero h1{font-size:22px;line-height:1.35}
+  .hero p{font-size:14px}
+  .card{padding:16px}
+  .card h2{font-size:18px}
+  .wrap{padding-bottom:44px}
+  .contact .ct-phone{font-size:23px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --brand:#8f9bff;--brand-2:#a5b0ff;--brand-soft:#232840;
+    --ink:#e8eaf0;--ink-2:#c2c7d4;--ink-3:#9aa1b1;
+    --line:#2b3040;--line-2:#232838;
+    --bg:#12141a;--surface:#1a1d26;--surface-2:#20242e;
+    --cta:#ff7a45;--cta-2:#ff9368;
+    --sh-1:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
+    --sh-2:0 2px 4px rgba(0,0,0,.45),0 12px 28px rgba(0,0,0,.38);
+  }
+  .topnav{background:#151824}
+  .topnav .brand::before{background:#151824;box-shadow:inset 0 0 0 4px #3949ab}
+  .hero{background:linear-gradient(135deg,#1b2140 0%,#232a52 62%,#2c3466 100%)}
+  .item .tag{background:#232840}
+  .shots img{background:#fff}
+}
 </style>
 </head>
 <body>
-<nav class="topnav"><div class="inner"><a href="/">🏠 深圳石岩元径村统建楼</a><a href="/">首页</a><a href="/ershoufang/">全部房源</a><a href="/baoanqu/shiyan/">深圳石岩</a><a href="/contact.html">📞 联系庄生</a><a href="/faq/">常见问题</a><a href="/keyword/nongminfang/">石岩农民房</a><a href="/keyword/tongjianlou/">石岩统建楼</a><a href="/keyword/xiaochanquanfang/">石岩小产权房</a><a href="/topic/T1/">户型详情深度解析</a><a href="/topic/T10/">业主真实故事</a><a href="/topic/T2/">周边配套完整指南</a><a href="/topic/T3/">双地铁通勤实测</a><a href="/topic/T4/">深圳小产权房购买指南</a><a href="/topic/T5/">石岩房价走势分析</a><a href="/topic/T6/">统建楼vs商品房对比</a><a href="/topic/T7/">业主FAQ答疑</a><a href="/topic/T8/">学区与教育资源</a><a href="/topic/T9/">购房流程与税费指引</a><a href="/sitemap.html">站点地图</a></div></nav><div class="wrap">
+<nav class="topnav"><div class="inner"><a href="/" class="brand">深圳石岩元径村统建楼</a><a href="/">首页</a><a href="/ershoufang/">全部房源</a><a href="/baoanqu/shiyan/">深圳石岩</a><a href="/contact.html">联系庄生</a><a href="/faq/">常见问题</a><a href="/keyword/nongminfang/">石岩农民房</a><a href="/keyword/tongjianlou/">石岩统建楼</a><a href="/keyword/xiaochanquanfang/">石岩小产权房</a><a href="/topic/T1/">户型详情深度解析</a><a href="/topic/T10/">业主真实故事</a><a href="/topic/T2/">周边配套完整指南</a><a href="/topic/T3/">双地铁通勤实测</a><a href="/topic/T4/">深圳小产权房购买指南</a><a href="/topic/T5/">石岩房价走势分析</a><a href="/topic/T6/">统建楼vs商品房对比</a><a href="/topic/T7/">业主FAQ答疑</a><a href="/topic/T8/">学区与教育资源</a><a href="/topic/T9/">购房流程与税费指引</a><a href="/sitemap.html">站点地图</a></div></nav><div class="wrap">
 <div class="hero">
+  <div class="eyebrow">深圳宝安 · 石岩街道 · 元径村统建楼</div>
   <h1>石岩买房常见问题</h1>
   <p>买石岩农民房 / 统建楼 / 小产权房最常被问到的 8 个问题，每题一页独立解析</p>
   <p>最近更新：2026-11-23 · 共收录在售房源 99 条</p>
+  <div class="acts"><button type="button" class="primary" data-bx-chat>在线咨询</button><a class="ghost" href="tel:13923838418">拨打电话</a></div>
 </div>
 <div class="crumb"><a href="/">首页</a> › <span>常见问题</span></div>
 <div class="card">
-  <h2>🎯 先看这三个关键词页</h2>
+  <h2>先看这三个关键词页</h2>
   <p>如果只想快速判断方向，从这三页开始：</p>
   <ul class="links">
 <li><a href="/keyword/nongminfang/">石岩农民房</a></li><li><a href="/keyword/tongjianlou/">石岩统建楼</a></li><li><a href="/keyword/xiaochanquanfang/">石岩小产权房</a></li></ul></div>
 <div class="card">
-  <h2>❓ 全部问题（8 个）</h2>
+  <h2>全部问题（8 个）</h2>
   <ul class="links">
 <li><a href="/q/xiaochanquan-guohu/">石岩小产权房能过户吗</a></li><div class="meta">村委过户 vs 不动产登记 · 材料清单 · 办理顺序 · 核验方法</div></li><li><a href="/q/daluoben-shishenme/">石岩统建楼大绿本是什么</a></li><div class="meta">大绿本与红本的区别 · 载明内容 · 核验方法 · 对交易的影响</div></li><li><a href="/q/nongminfang-tongjianlou-chayi/">石岩农民房和统建楼有什么区别</a></li><div class="meta">产权凭证 / 价格构成 / 交易流程 / 贷款落户 / 拆迁认定</div></li><li><a href="/q/tongjianlou-chaiqian/">石岩统建楼拆迁补偿怎么算</a></li><div class="meta">认定面积逻辑 · 常见补偿方式 · 合同必须写的条款</div></li><li><a href="/q/yuanjingcun-dujia/">元径村统建楼多少钱一平</a></li><div class="meta">单价构成 · 站内可核对参考 · 影响单价的因素 · 议价空间</div></li><li><a href="/q/xiaochanquan-luohu/">石岩小产权房能落户吗</a></li><div class="meta">判断逻辑 · 影响因素 · 落户前必问的六句话</div></li><li><a href="/q/nongminfang-kanzheng/">买石岩农民房要看什么证</a></li><div class="meta">材料清单 · 核验顺序 · 红线情形 · 现场动作</div></li><li><a href="/q/tongjianlou-cengshu/">石岩统建楼怎么挑楼层</a></li><div class="meta">低中高楼层对比 · 电梯与朝向 · 总价与转手 · 核验清单</div></li></ul></div>
-<div class="card"><h2>🏠 相关房源入口</h2><ul class="links"><li><a href="/ershoufang/">全部房源列表（99 条）</a></li><li><a href="/baoanqu/shiyan/">深圳石岩区域聚合页</a></li><li><a href="/topic/T1/">户型详情深度解析</a></li><li><a href="/topic/T10/">业主真实故事</a></li><li><a href="/topic/T2/">周边配套完整指南</a></li><li><a href="/topic/T3/">双地铁通勤实测</a></li><li><a href="/topic/T4/">深圳小产权房购买指南</a></li><li><a href="/topic/T5/">石岩房价走势分析</a></li><li><a href="/topic/T6/">统建楼vs商品房对比</a></li><li><a href="/topic/T7/">业主FAQ答疑</a></li><li><a href="/topic/T8/">学区与教育资源</a></li><li><a href="/topic/T9/">购房流程与税费指引</a></li><li><a href="/sitemap.html">站点地图</a></li></ul></div><div class="card contact">
-  <h2>📞 看房预约 · 联系庄生</h2>
+<div class="card"><h2>相关房源入口</h2><ul class="links"><li><a href="/ershoufang/">全部房源列表（99 条）</a></li><li><a href="/baoanqu/shiyan/">深圳石岩区域聚合页</a></li><li><a href="/topic/T1/">户型详情深度解析</a></li><li><a href="/topic/T10/">业主真实故事</a></li><li><a href="/topic/T2/">周边配套完整指南</a></li><li><a href="/topic/T3/">双地铁通勤实测</a></li><li><a href="/topic/T4/">深圳小产权房购买指南</a></li><li><a href="/topic/T5/">石岩房价走势分析</a></li><li><a href="/topic/T6/">统建楼vs商品房对比</a></li><li><a href="/topic/T7/">业主FAQ答疑</a></li><li><a href="/topic/T8/">学区与教育资源</a></li><li><a href="/topic/T9/">购房流程与税费指引</a></li><li><a href="/sitemap.html">站点地图</a></li></ul></div><div class="card contact">
+  <h2>看房预约 · 联系庄生</h2>
   <div class="ct">
     <div class="ct-main">
       <div class="ct-name">庄生<span class="ct-role">业主直联 · 本站在线联系人</span></div>
       <a class="ct-phone" href="tel:13923838418">13923838418</a>
-      <div class="ct-addr">📍 深圳市宝安区石岩街道元径村统建楼B栋（近 6 号线 / 13 号线换乘站上屋站）</div>
+      <div class="ct-addr">深圳市宝安区石岩街道元径村统建楼B栋（近 6 号线 / 13 号线换乘站上屋站）</div>
       <div class="ct-note">看房请提前一天预约，周末到访人数较多；可现场核对产权材料与村委过户流程。</div>
     </div>
     <div class="ct-side">
-      <a class="ct-btn" href="tel:13923838418">📞 点击拨号</a>
+      <a class="ct-btn" href="tel:13923838418">拨打电话</a>
       <a class="ct-btn ghost" href="/contact.html">联系与位置详情</a>
     </div>
   </div>
