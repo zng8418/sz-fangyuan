@@ -1,3 +1,28 @@
+# 百姓网 SEO 镜像站 —— 欢迎搜索引擎抓取
 User-agent: *
 Allow: /
+Disallow: /search
+Disallow: /tmp/
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Baiduspider-image
+Allow: /
+
+User-agent: Baiduspider-video
+Allow: /
+
+User-agent: Baiduspider-favo
+Allow: /
+
+User-agent: Baiduspider-plus
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 Sitemap: https://bx.szjacky.com/sitemap.xml
