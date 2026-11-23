@@ -60,7 +60,7 @@
     if (!document.getElementById("bxChatCss")) {
       var st = document.createElement("style");
       st.id = "bxChatCss";
-      st.textContent = css();
+      st.textContent = s;
       document.head.appendChild(st);
     }
   }
