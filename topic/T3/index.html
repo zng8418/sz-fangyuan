@@ -99,6 +99,31 @@ a{transition:color .18s var(--ease),background-color .18s var(--ease),border-col
 .gallery figure{margin:0}
 .gallery img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface)}
 .gallery figcaption{font-size:12px;color:var(--ink-3);text-align:center;margin-top:5px}
+.gallery figure{border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--line);background:var(--surface);box-shadow:var(--sh-1);
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.gallery figure:hover{transform:translateY(-2px);box-shadow:var(--sh-2)}
+.gallery img{transition:transform .4s var(--ease)}
+.gallery figure:hover img{transform:scale(1.05)}
+/* 灯箱（gallery.js 渐进增强；无 JS 时点缩略图直接开原图） */
+.lightbox{position:fixed;inset:0;z-index:120;background:rgba(8,10,18,.93);display:none;align-items:center;justify-content:center;padding:18px}
+.lightbox.on{display:flex}
+.lightbox img{max-width:92vw;max-height:86vh;border-radius:10px;box-shadow:0 24px 64px rgba(0,0,0,.55)}
+.lightbox .lb-x{position:absolute;top:10px;right:16px;font-size:34px;color:#fff;cursor:pointer;line-height:1;opacity:.85}
+.lightbox .lb-nav{position:absolute;top:50%;transform:translateY(-50%);font-size:44px;color:#fff;padding:8px 14px;cursor:pointer;user-select:none;opacity:.75}
+.lightbox .lb-prev{left:4px}.lightbox .lb-next{right:4px}
+.lightbox .lb-n{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.85);font-size:13px}
+@media(max-width:640px){.lightbox .lb-nav{font-size:34px}}
+/* 真图 hero：压深色渐变保对比，文字仍全可读 */
+.hero.hero-photo{background:linear-gradient(120deg,rgba(19,26,98,.96) 0%,rgba(26,35,126,.84) 46%,rgba(40,53,147,.40) 100%),
+  var(--hero-img) center/cover no-repeat}
+.hero .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.hero .stats div{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.30);border-radius:var(--r-ctl);
+  padding:7px 13px;font-size:12.5px;color:rgba(255,255,255,.92);line-height:1.5}
+.hero .stats b{font-size:17px;font-weight:700;color:#fff;margin-right:4px}
+/* 卡片小图悬停微缩放 */
+.item .thumb{overflow:hidden;border-radius:9px}
+.item .thumb img{transition:transform .35s var(--ease)}
+.item:hover .thumb img{transform:scale(1.045)}
 .item .tag{display:inline-block;background:var(--brand-soft);color:var(--brand);border-radius:var(--r-pill);padding:1px 9px;font-size:12px;margin-right:6px}
 
 /* ---------- 信息格 ---------- */
@@ -209,5 +234,6 @@ a{transition:color .18s var(--ease),background-color .18s var(--ease),border-col
   </div>
 </div><div class="card"><h2>相关栏目</h2><ul class="links"><li><a href="/keyword/nongminfang/">石岩农民房</a></li><li><a href="/keyword/tongjianlou/">石岩统建楼</a></li><li><a href="/keyword/xiaochanquanfang/">石岩小产权房</a></li><li><a href="/topic/T1/">户型详情深度解析</a></li><li><a href="/topic/T10/">业主真实故事</a></li><li><a href="/topic/T2/">周边配套完整指南</a></li><li><a href="/topic/T3/">双地铁通勤实测</a></li><li><a href="/topic/T4/">深圳小产权房购买指南</a></li><li><a href="/topic/T5/">石岩房价走势分析</a></li><li><a href="/topic/T6/">统建楼vs商品房对比</a></li><li><a href="/topic/T7/">业主FAQ答疑</a></li><li><a href="/topic/T8/">学区与教育资源</a></li><li><a href="/topic/T9/">购房流程与税费指引</a></li><li><a href="/baoanqu/shiyan/">深圳石岩区域页</a></li><li><a href="/ershoufang/">全部房源</a></li><li><a href="/sitemap.html">站点地图</a></li></ul></div><div class="card"><h2>位置示意图</h2><p>元径村在石岩片区的位置。</p><div class="gallery"><figure><a href="/img/house/h9e84165000_main.jpg" target="_blank" rel="noopener"><picture><source srcset="/img/house/h9e84165000_thumb.webp" type="image/webp"><img src="/img/house/h9e84165000_thumb.jpg" srcset="/img/house/h9e84165000_thumb.webp 270w, /img/house/h9e84165000_thumb.jpg 270w" sizes="(max-width:640px) 92vw, 340px" width="270" height="420" loading="lazy" decoding="async" alt="深圳宝安石岩元径村园径路与北环路位置示意图"></picture></a></figure><figure><a href="/img/house/hb26258f13d_main.jpg" target="_blank" rel="noopener"><picture><source srcset="/img/house/hb26258f13d_thumb.webp" type="image/webp"><img src="/img/house/hb26258f13d_thumb.jpg" srcset="/img/house/hb26258f13d_thumb.webp 270w, /img/house/hb26258f13d_thumb.jpg 270w" sizes="(max-width:640px) 92vw, 340px" width="270" height="420" loading="lazy" decoding="async" alt="深圳宝安石岩元径村统建楼卫星位置示意图"></picture></a></figure></div></div><footer class="foot"><p class="ct-line">看房联系：庄生 · <a href="tel:13923838418">13923838418</a> · 深圳市宝安区石岩街道元径村统建楼B栋</p><p>© 2026 深圳石岩元径村统建楼 · 全部内容由自动发布系统生成，仅供参考，交易请自行核实</p><p>热门关键词：<a href="/keyword/nongminfang/">石岩农民房</a> · <a href="/keyword/tongjianlou/">石岩统建楼</a> · <a href="/keyword/xiaochanquanfang/">石岩小产权房</a></p><p>常见问题：<a href="/q/xiaochanquan-guohu/">石岩小产权房能过户吗</a> · <a href="/q/daluoben-shishenme/">石岩统建楼大绿本是什么</a> · <a href="/q/nongminfang-tongjianlou-chayi/">石岩农民房和统建楼有什么区别</a> · <a href="/q/tongjianlou-chaiqian/">石岩统建楼拆迁补偿怎么算</a> · <a href="/q/yuanjingcun-dujia/">元径村统建楼多少钱一平</a> · <a href="/q/xiaochanquan-luohu/">石岩小产权房能落户吗</a> · <a href="/q/nongminfang-kanzheng/">买石岩农民房要看什么证</a> · <a href="/q/tongjianlou-cengshu/">石岩统建楼怎么挑楼层</a></p><p><a href="/sitemap.html">HTML 站点地图</a> · <a href="/rss.xml">RSS</a> · <a href="/sitemap.xml">sitemap.xml</a></p></footer></div>
 <script src="/js/chat.js" defer></script>
+<script src="/js/gallery.js" defer></script>
 </body>
 </html>
