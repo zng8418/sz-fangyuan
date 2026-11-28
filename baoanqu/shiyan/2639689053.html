@@ -75,12 +75,18 @@ a{transition:color .18s var(--ease),background-color .18s var(--ease),border-col
 .topnav .more-panel a:hover{background:rgba(255,255,255,.14);color:#fff}
 /* 面板改成文档流后 header 变高，此时再粘顶会大面积遮住正文 ⇒ 展开时不粘顶 */
 .topnav:has(.more[open]){position:static}
-/* 窄屏：品牌独占首行，导航项换行铺满；头部不粘顶，避免多行导航遮挡正文 */
+/* 移动端顶层要能排进一行: 常见问题/联系庄生 在顶层隐藏, 面板里有副本(only-m 仅窄屏显示) */
+@media (min-width:721px){.topnav .more-panel .only-m{display:none}}
+@media (max-width:720px){.topnav .in-more,.topnav .inner > a[href="/contact.html"]{display:none}}
+/* 窄屏：品牌独占首行，导航项换行铺满。
+   ⚠️ topnav 必须保持 sticky —— 早前改成 position:static 会让整条导航在滚动后消失，
+   用户反馈「标题上方的字不见了」。sticky 后总高约 66px（品牌行 29 + 导航行 37），
+   只占手机屏 8%，正文仍完整可读。 */
 @media (max-width:720px){
-  .topnav{position:static}
+  .topnav{position:sticky;top:0}
   .topnav .inner{padding:0 12px}
-  .topnav .brand{flex:1 0 100%;font-size:14.5px;padding:11px 0 1px}
-  .topnav a{font-size:13px;padding:8px 9px}
+  .topnav .brand{flex:1 0 100%;font-size:14px;padding:9px 0 0;line-height:1.3}
+  .topnav a{font-size:13px;padding:7px 8px}
   .topnav .more-panel{grid-template-columns:repeat(2,minmax(0,1fr));padding:8px 6px}
   .topnav .more-panel a{font-size:12.5px;padding:5px 7px}
 }
@@ -246,7 +252,7 @@ a{transition:color .18s var(--ease),background-color .18s var(--ease),border-col
 </style>
 </head>
 <body>
-<nav class="topnav"><div class="inner"><a href="/" class="brand">深圳石岩元径村统建楼</a><a href="/">首页</a><a href="/ershoufang/">全部房源</a><a href="/baoanqu/shiyan/">深圳石岩</a><a href="/contact.html">联系庄生</a><a href="/faq/">常见问题</a><details class="more"><summary>更多</summary><div class="more-panel"><a href="/keyword/nongminfang/">石岩农民房</a><a href="/keyword/tongjianlou/">石岩统建楼</a><a href="/keyword/xiaochanquanfang/">石岩小产权房</a><a href="/topic/T1/">户型详情深度解析</a><a href="/topic/T10/">业主真实故事</a><a href="/topic/T2/">周边配套完整指南</a><a href="/topic/T3/">双地铁通勤实测</a><a href="/topic/T4/">深圳小产权房购买指南</a><a href="/topic/T5/">石岩房价走势分析</a><a href="/topic/T6/">统建楼vs商品房对比</a><a href="/topic/T7/">业主FAQ答疑</a><a href="/topic/T8/">学区与教育资源</a><a href="/topic/T9/">购房流程与税费指引</a></div></details><a href="/sitemap.html">站点地图</a></div></nav><div class="wrap"><div class="crumb"><a href="/">首页</a> › <a href="/ershoufang/">全部房源</a> › <a href="/topic/T4/">深圳小产权房购买指南</a> › <span>石岩小产权房｜石岩二手房4房个人出售个人出售</span></div><div class="hero hero-photo" style="--hero-img:url('/img/house/h1defff4845_main.jpg')">
+<nav class="topnav"><div class="inner"><a href="/" class="brand">深圳石岩元径村统建楼</a><a href="/">首页</a><a href="/ershoufang/">全部房源</a><a href="/baoanqu/shiyan/">深圳石岩</a><a href="/contact.html">联系庄生</a><a href="/faq/" class="in-more">常见问题</a><details class="more"><summary>更多</summary><div class="more-panel"><a href="/faq/" class="only-m">常见问题</a><a href="/contact.html" class="only-m">联系庄生</a><a href="/keyword/nongminfang/">石岩农民房</a><a href="/keyword/tongjianlou/">石岩统建楼</a><a href="/keyword/xiaochanquanfang/">石岩小产权房</a><a href="/topic/T1/">户型详情深度解析</a><a href="/topic/T10/">业主真实故事</a><a href="/topic/T2/">周边配套完整指南</a><a href="/topic/T3/">双地铁通勤实测</a><a href="/topic/T4/">深圳小产权房购买指南</a><a href="/topic/T5/">石岩房价走势分析</a><a href="/topic/T6/">统建楼vs商品房对比</a><a href="/topic/T7/">业主FAQ答疑</a><a href="/topic/T8/">学区与教育资源</a><a href="/topic/T9/">购房流程与税费指引</a></div></details><a href="/sitemap.html">站点地图</a></div></nav><div class="wrap"><div class="crumb"><a href="/">首页</a> › <a href="/ershoufang/">全部房源</a> › <a href="/topic/T4/">深圳小产权房购买指南</a> › <span>石岩小产权房｜石岩二手房4房个人出售个人出售</span></div><div class="hero hero-photo" style="--hero-img:url('/img/house/h1defff4845_main.jpg')">
   <div class="eyebrow">深圳宝安 · 石岩街道 · 元径村统建楼</div>
   <h1>石岩小产权房｜石岩二手房4房个人出售个人出售</h1>
   <p>元径村统建楼B栋 · 宝安区石岩街道 · 4室1厅1卫 · 120㎡ · 电梯11楼 · ¥128万</p>
