@@ -58,25 +58,31 @@ a{transition:color .18s var(--ease),background-color .18s var(--ease),border-col
 .topnav .brand{display:flex;align-items:center;gap:8px;font-weight:700;color:#fff;font-size:15px;padding-left:0;
   flex:0 1 auto;max-width:100%;white-space:normal}
 .topnav .brand::before{content:"";width:18px;height:18px;border-radius:5px;background:#fff;box-shadow:inset 0 0 0 4px var(--brand-2)}
-/* 「更多」折叠菜单：展开面板为 absolute 浮层，不占布局高度、不把导航堆成墙 */
+/* 「更多」折叠菜单：面板参与文档流（展开时把正文推下去），不做浮层盖住正文 */
+.topnav .more{flex:0 0 auto}
+.topnav .more[open]{flex:1 0 100%}
 .topnav .more>summary{list-style:none;cursor:pointer;color:rgba(255,255,255,.82);font-size:14px;
   padding:13px 10px;white-space:nowrap;user-select:none}
 .topnav .more>summary::-webkit-details-marker{display:none}
 .topnav .more>summary::after{content:" ▾";font-size:10px;opacity:.75}
 .topnav .more[open]>summary{color:#fff;background:rgba(255,255,255,.16)}
 .topnav .more[open]>summary::after{content:" ▴"}
-.topnav .more-panel{position:absolute;top:100%;left:0;z-index:70;background:var(--brand-2);
-  border-radius:0 0 var(--r-ctl) var(--r-ctl);box-shadow:var(--sh-2);padding:8px 6px;
-  display:flex;flex-wrap:wrap;gap:2px;width:max-content;max-width:min(92vw,760px)}
+.topnav .more-panel{position:static;width:auto;max-width:100%;background:var(--brand-2);
+  border-radius:var(--r-ctl);box-shadow:var(--sh-2);padding:10px 8px;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
 .topnav .more-panel a{color:rgba(255,255,255,.88);font-size:13.5px;padding:7px 9px;border-radius:6px;
   white-space:nowrap;border-bottom-color:transparent}
 .topnav .more-panel a:hover{background:rgba(255,255,255,.14);color:#fff}
+/* 面板改成文档流后 header 变高，此时再粘顶会大面积遮住正文 ⇒ 展开时不粘顶 */
+.topnav:has(.more[open]){position:static}
 /* 窄屏：品牌独占首行，导航项换行铺满；头部不粘顶，避免多行导航遮挡正文 */
 @media (max-width:720px){
   .topnav{position:static}
   .topnav .inner{padding:0 12px}
   .topnav .brand{flex:1 0 100%;font-size:14.5px;padding:11px 0 1px}
   .topnav a{font-size:13px;padding:8px 9px}
+  .topnav .more-panel{grid-template-columns:repeat(2,minmax(0,1fr));padding:8px 6px}
+  .topnav .more-panel a{font-size:12.5px;padding:5px 7px}
 }
 
 /* ---------- Hero：眉标 + 标题 + 副文案 + 行动区 ---------- */
